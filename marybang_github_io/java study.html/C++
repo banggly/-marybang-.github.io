@@ -1,0 +1,65 @@
+#include <LiquidCrystal_I2C.h>
+
+const int LIGHT_SENSOR_PIN = A0;  // 조도센서에 연결된 아날로그 핀
+const int ERROR_VALUE = 500;  // 에러로 표시될 조도센서 값의 임계값
+const int LCD_ADDRESS = 0x27;     // LCD의 I2C 주소
+const int LCD_WIDTH = 16;         // LCD의 너비
+const int LCD_HEIGHT = 2;         // LCD의 높이
+
+LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT);
+
+void setup() {
+  Serial.begin(9600);
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Liquid Level");
+  lcd.setCursor(0, 1);
+  lcd.print("Monitoring");
+
+  pinMode(7,OUTPUT);
+}
+
+void loop() {
+
+  int lightValue = analogRead(LIGHT_SENSOR_PIN);  // 조도센서 값 읽기
+  digitalWrite(7,HIGH);
+
+  // 조도센서 값이 임계값 이하이면 에러 표시
+  if (lightValue <= ERROR_VALUE) {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Empty");
+  } else {
+    // 정상 상태 표시
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Full");
+  }
+  
+  delay(1000);  // 1초마다 상태를 업데이트
+}
+
+//if sensor --> n delay 2000; -> n --> 기능 실행
+//코드 소개 --> 변수 통일, 센서 값 설정(기준치 잡기)
+
+
+시작 기능 press to +-> 버튼
+
+버튼 2 사출 횟수 + int
+버튼 1 next 종료
+
+y축 사출 횟수 x축 1 2 3 버튼
+
+버튼 눌러서 pass 기능 넣기 
+
+반복 --> 동일 기능 n번 반복/버튼 눌러서 i 기능 패스할 수 있음
+
+ready!
+Press to Pass --> 버튼 ()
+
+if 4 센서가 모두 감지 --> warning! --> array 1x2y3z4w 센서값을 항상 저장하는 변수의 배열 저장
+for int i=0 i>=3i++
+if sarrary[0] >=123124
+
+아두이노 부 5cm 늘어남
